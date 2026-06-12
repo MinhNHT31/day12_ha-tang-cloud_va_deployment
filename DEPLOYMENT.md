@@ -1,7 +1,7 @@
 # Deployment Information
 
 ## Public URL
-https://day12-production-0d22.up.railway.app
+https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app
 
 ## Platform
 Railway
@@ -10,7 +10,7 @@ Railway
 
 ### 1. Health Check (Liveness Probe)
 ```bash
-curl -i https://day12-agent-production.up.railway.app/health
+curl -i https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app/health
 ```
 **Expected response:**
 ```json
@@ -18,18 +18,18 @@ curl -i https://day12-agent-production.up.railway.app/health
   "status": "ok",
   "version": "1.0.0",
   "environment": "production",
-  "uptime_seconds": 124.5,
-  "total_requests": 0,
+  "uptime_seconds": 423.1,
+  "total_requests": 4,
   "checks": {
     "llm": "mock"
   },
-  "timestamp": "2026-06-12T07:55:00Z"
+  "timestamp": "2026-06-12T11:05:58.690708+00:00"
 }
 ```
 
 ### 2. Readiness Check (Readiness Probe)
 ```bash
-curl -i https://day12-agent-production.up.railway.app/ready
+curl -i https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app/ready
 ```
 **Expected response:**
 ```json
@@ -41,43 +41,43 @@ curl -i https://day12-agent-production.up.railway.app/ready
 ### 3. API Test (With Authentication and user_id session tracking)
 - **Without API Key (Should fail with 401):**
 ```bash
-curl -i -X POST https://day12-agent-production.up.railway.app/ask \
+curl -i -X POST https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app/ask \
   -H "Content-Type: application/json" \
   -d '{"user_id": "test_user", "question": "Hello"}'
 ```
 - **With Correct API Key (Should succeed):**
 ```bash
-curl -i -X POST https://day12-agent-production.up.railway.app/ask \
-  -H "X-API-Key: your-secret-api-key" \
+curl -i -X POST https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app/ask \
+  -H "X-API-Key: test-key" \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "test_user", "question": "My name is Alice"}'
+  -d '{"user_id": "test", "question": "Hello"}'
 ```
-- **Conversation history reference test:**
+- **Repeat API test:**
 ```bash
-curl -i -X POST https://day12-agent-production.up.railway.app/ask \
-  -H "X-API-Key: your-secret-api-key" \
+curl -i -X POST https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app/ask \
+  -H "X-API-Key: test-key" \
   -H "Content-Type: application/json" \
-  -d '{"user_id": "test_user", "question": "What is my name?"}'
+  -d '{"user_id": "test", "question": "Hello"}'
 ```
 **Expected response:**
 ```json
 {
-  "question": "What is my name?",
-  "answer": "Your name is Alice.",
+  "question": "Hello",
+  "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
   "model": "gpt-4o-mini",
-  "timestamp": "2026-06-12T07:56:00Z"
+  "timestamp": "2026-06-12T11:06:05.101263+00:00"
 }
 ```
 
 ## Environment Variables Set
-- `PORT` (assigned dynamically by platform, default: `8000`)
+- `PORT` (assigned dynamically by Railway, observed: `8080`)
 - `ENVIRONMENT` (set to `production`)
-- `AGENT_API_KEY` (custom production api key, e.g. `your-secret-api-key`)
-- `REDIS_URL` (Redis database connection string, e.g., `redis://default:password@host:port`)
+- `AGENT_API_KEY` (custom production API key)
+- `REDIS_URL` (Railway Redis connection string)
 - `DAILY_BUDGET_USD` (set to `5.0`)
 - `RATE_LIMIT_PER_MINUTE` (set to `20`)
 
 ## Screenshots
-- **Deployment dashboard**: Saved at `screenshots/dashboard.png`
 - **Service running**: Saved at `screenshots/running.png`
-- **Test results**: Saved at `screenshots/test.png`
+- **API test results**: Saved at `screenshots/test.png`
+- **Combined terminal proof**: Saved at `screenshots/test-results.png`

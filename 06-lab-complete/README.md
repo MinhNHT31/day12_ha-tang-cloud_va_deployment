@@ -25,10 +25,9 @@ Kết hợp TẤT CẢ những gì đã học trong 1 project hoàn chỉnh.
 06-lab-complete/
 ├── app/
 │   ├── main.py         # Entry point — kết hợp tất cả
-│   ├── config.py       # 12-factor config
-│   ├── auth.py         # API Key + JWT
-│   ├── rate_limiter.py # Rate limiting
-│   └── cost_guard.py   # Budget protection
+│   └── config.py       # 12-factor config
+├── utils/
+│   └── mock_llm.py     # Mock LLM không cần API key thật
 ├── Dockerfile          # Multi-stage, production-ready
 ├── docker-compose.yml  # Full stack
 ├── railway.toml        # Deploy Railway
@@ -73,7 +72,6 @@ railway login
 railway init
 railway variables set ENVIRONMENT=production
 railway variables set AGENT_API_KEY="$(openssl rand -hex 32)"
-railway variables set JWT_SECRET="$(openssl rand -hex 32)"
 railway variables set DAILY_BUDGET_USD=5.0
 railway variables set RATE_LIMIT_PER_MINUTE=20
 

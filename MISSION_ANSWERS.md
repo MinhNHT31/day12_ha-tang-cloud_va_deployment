@@ -47,8 +47,8 @@ Có ít nhất 5 anti-patterns chính được phát hiện trong file `develop/
 ## Part 3: Cloud Deployment
 
 ### Exercise 3.1: Railway deployment
-- **URL**: `https://day12-agent-production.up.railway.app`
-- **Screenshot**: Đã đính kèm hình ảnh deployment dashboard trong thư mục `screenshots/dashboard.png`.
+- **URL**: `https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app`
+- **Screenshot**: Đã đính kèm hình ảnh kiểm tra `/health` và `/ask` trong thư mục `screenshots/test-results.png`.
 
 ---
 
@@ -59,11 +59,11 @@ Dưới đây là các kết quả thử nghiệm bảo mật (local test):
 1. **Test API Key Auth**:
    - Gửi request không có key: Nhận mã lỗi `401 Unauthorized` kèm thông điệp `"Invalid or missing API key"`.
    - Gửi request với API key chính xác: Nhận mã lỗi `200 OK` và dữ liệu phản hồi từ AI agent thành công.
-2. **Test JWT Auth (Advanced)**:
-   - Request token qua `POST /token` thành công, trả về chuỗi access token JWT.
-   - Gửi request đến `/ask` kèm header `Authorization: Bearer <token>` hoạt động mượt mà. Nhận lỗi `401 Token expired` khi token hết hạn.
+2. **Test public deployment**:
+   - Public endpoint `GET /health` trên Railway trả về `status: ok`, `environment: production`, và `checks.llm: mock`.
+   - Public endpoint `POST /ask` với header `X-API-Key: test-key` trả về `200 OK` và response từ mock AI agent.
 3. **Test Rate Limiting**:
-   - Khi gửi liên tục 20 requests trong vòng dưới 1 phút, kể từ request thứ 11 hệ thống trả về mã lỗi `429 Too Many Requests` kèm theo header `Retry-After`.
+   - Với cấu hình `RATE_LIMIT_PER_MINUTE=20`, khi gửi vượt quá 20 requests trong vòng dưới 1 phút, hệ thống trả về mã lỗi `429 Too Many Requests` kèm theo header `Retry-After`.
 
 ---
 
