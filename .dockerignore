@@ -3,16 +3,23 @@
 
 # Python
 __pycache__/
+**/__pycache__/
 *.pyc
+**/*.pyc
 *.pyo
 *.pyd
 .Python
 *.egg-info/
+.pytest_cache/
+**/.pytest_cache/
 
 # Virtual environment
 venv/
 env/
 .venv/
+**/venv/
+**/env/
+**/.venv/
 
 # IDE
 .vscode/
@@ -26,13 +33,24 @@ Thumbs.db
 # Secrets — QUAN TRỌNG: không bao giờ đưa .env vào image
 .env
 .env.*
+**/.env
+**/.env.*
 !.env.example
+!**/.env.example
 
-# Git
+# Git / local agent metadata
 .git/
 .gitignore
+.codex/
+.agents/
 
-# Docs và test
+# Docs, screenshots, logs, tests
 *.md
 tests/
 docs/
+screenshots/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.log

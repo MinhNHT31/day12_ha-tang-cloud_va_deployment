@@ -71,8 +71,18 @@ npm i -g @railway/cli
 # Login và deploy
 railway login
 railway init
+railway variables set ENVIRONMENT=production
+railway variables set AGENT_API_KEY="$(openssl rand -hex 32)"
+railway variables set JWT_SECRET="$(openssl rand -hex 32)"
+railway variables set DAILY_BUDGET_USD=5.0
+railway variables set RATE_LIMIT_PER_MINUTE=20
+
+# Optional: nếu có Railway Redis plugin hoặc Redis ngoài
+railway variables set REDIS_URL=redis://default:password@host:port
+
+# Optional: nếu dùng OpenAI thật, nếu để trống app dùng mock LLM
 railway variables set OPENAI_API_KEY=sk-...
-railway variables set AGENT_API_KEY=your-secret-key
+
 railway up
 
 # Nhận public URL!

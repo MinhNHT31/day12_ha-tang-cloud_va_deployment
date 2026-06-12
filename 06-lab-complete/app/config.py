@@ -43,10 +43,13 @@ class Settings:
     def validate(self):
         logger = logging.getLogger(__name__)
         if self.environment == "production":
-            if self.agent_api_key == "dev-key-change-me":
+            insecure_api_keys = {
+                "dev-key-change-me",
+                "dev-key-change-me-in-production",
+                "your-secret-key",
+            }
+            if self.agent_api_key in insecure_api_keys:
                 raise ValueError("AGENT_API_KEY must be set in production!")
-            if self.jwt_secret == "dev-jwt-secret":
-                raise ValueError("JWT_SECRET must be set in production!")
         if not self.openai_api_key:
             logger.warning("OPENAI_API_KEY not set — using mock LLM")
         return self
