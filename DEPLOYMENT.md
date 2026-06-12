@@ -1,5 +1,7 @@
 # Deployment Information
-
+> **Student Name:** Nguyễn Hữu Thái Minh
+> **Student ID:** 2A202600619 
+> **Date:** 12/06/2026
 ## Public URL
 https://day12ha-tang-cloudvadeployment-production-c103.up.railway.app
 
